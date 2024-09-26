@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { login } from "./requests/login";
 
-export default function Home() {
+export default function Login() {
 
   const [ name, setName ] = useState<string>('');
   const [ email, setEmail ] = useState<string>('');
@@ -52,6 +52,7 @@ export default function Home() {
           />
         </div>
         <button type="submit">{status === "loading" ? "Submitting..." : "Enter"}</button>
+        {status === 'error' ? <p>Something went wrong. Please try again.</p> : ''}
       </form>
     </div>
   );
