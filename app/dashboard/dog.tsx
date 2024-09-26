@@ -30,6 +30,7 @@ export default function DogProfile({ dog }: { dog: Dog }) {
                     </ul>
                         <button onClick={handleLike}>
                             <LikeIcon liked={liked} />
+                            <span className="sr-only">{liked ? "unlike" : "like"}</span>
                         </button>
                 </div>
             </div>

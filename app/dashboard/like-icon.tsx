@@ -2,6 +2,8 @@ export function LikeIcon({ liked } : { liked: boolean }) {
     return(
         <svg xmlns="http://www.w3.org/2000/svg" 
             fill={liked? '#be185d' : 'none'}
+            aira-hidden="true"
+            focusable="false"
             className="size-8 hover:fill-pink-700 active:fill-pink-700 focus:fill-pink-700"
             viewBox="0 0 24 24" stroke-width="1.5" 
             stroke="currentColor" >
