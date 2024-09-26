@@ -1,4 +1,4 @@
-const BASE_URL = "https://frontend-take-home-service.fetch.com";
+import { BASE_URL } from "./constants";
 
 export async function login({ name, email } : { name: string, email: string }) {
     const endpoint = `${BASE_URL}/auth/login`;
@@ -16,8 +16,7 @@ export async function login({ name, email } : { name: string, email: string }) {
             credentials: 'include',
             mode: 'cors',
         });
-
-        return await response.json();
+        return response;
     } catch (err) {
         return err;
     }

@@ -2,21 +2,22 @@
 
 import { FormEvent, useState } from "react";
 import { login } from "./requests/login";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-
+  const router = useRouter();
   const [ name, setName ] = useState<string>('');
   const [ email, setEmail ] = useState<string>('');
   const [ status, setStatus ] = useState<string>('idle');
-
+ 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setStatus('loading');
 
-    // TODO: Add error UI and success redirect
     const response = await login({ name, email });
     if (response.ok) {
       setStatus('success');
+      router.push('/dashboard');
     } else {
       setStatus('error');
     }
