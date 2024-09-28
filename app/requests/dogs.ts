@@ -1,61 +1,57 @@
 import { BASE_URL } from "./constants";
-import type { Dog } from "../types/dog";
 
 export interface QueryParams {
-    breeds?: string[];
-    zipCodes?: string[];
-    ageMin?: number;
-    ageMax?: number;
-    sort?: string;
+  ageMax?: number;
+  ageMin?: number;
+  breeds?: string[];
+  from?: string;
+  prev?: string;
+  sort?: string;
+  zipCodes?: string[];
 }
 
-export async function searchDogs(url:string, searchParams: QueryParams) {
-    const search = new URLSearchParams();
+export async function searchDogs(url: string, searchParams: QueryParams) {
+  const search = new URLSearchParams();
 
-    for (const [key, value] of Object.entries(searchParams)) {
-        search.append(key, value);
-      }
-    
-    const endpoint = `${BASE_URL}/dogs/search?${search.toString()}`;
-    try {
-        const response = await fetch(endpoint, {
-            credentials: 'include',
-        });
+  for (const [key, value] of Object.entries(searchParams)) {
+    search.append(key, value);
+  }
 
-        if(response.ok) {
-            const json = await response.json();
-            return json;
-        }
+  const endpoint = `${BASE_URL}/dogs/search?${search.toString()}`;
+  try {
+    const response = await fetch(endpoint, {
+      credentials: "include",
+    });
 
-        throw response;
-
-    } catch (err) {
-        throw err;
+    if (response.ok) {
+      const json = await response.json();
+      return json;
     }
+    throw response;
+  } catch (err) {
+    throw err;
+  }
 }
 
 export async function getDogData(url: string, dogIds: string[]) {
-    const endpoint = `${BASE_URL}/dogs`;
+  const endpoint = `${BASE_URL}/dogs`;
 
-    try {
+  try {
     const response = await fetch(endpoint, {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify(dogIds)
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(dogIds),
     });
 
-    if(response.ok) {
-        const json = await response.json();
-        return json;
+    if (response.ok) {
+      const json = await response.json();
+      return json;
     }
     throw response;
-
-} catch (err) {
-
+  } catch (err) {
     throw err;
-    }
+  }
 }
-
