@@ -33,7 +33,7 @@ export async function searchDogs(url: string, searchParams: QueryParams) {
   }
 }
 
-export async function getDogData(url: string, dogIds: string[]) {
+export async function getDogData({url, dogIds} : {url?: string, dogIds: string[]}) {
   const endpoint = `${BASE_URL}/dogs`;
 
   try {
@@ -44,6 +44,29 @@ export async function getDogData(url: string, dogIds: string[]) {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(dogIds),
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      return json;
+    }
+    throw response;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function findAMatch(likedDogIds: string[]) {
+  const endpoint = `${BASE_URL}/dogs/match`;
+
+  try {
+    const response = await fetch(endpoint, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(likedDogIds),
     });
 
     if (response.ok) {
