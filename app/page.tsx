@@ -28,7 +28,7 @@ export default function Login() {
     setStatus("loading");
 
     const response = await login({ name, email });
-
+    //TODO: provide interface
     if (response.ok) {
       setStatus("success");
       router.push("/dashboard");
@@ -52,7 +52,7 @@ export default function Login() {
   return (
     <Container>
       <Box p="8">
-        <Heading as="h1">Let's find you a dog!</Heading>
+        <Heading as="h1">Let&lsquo;s find you a dog!</Heading>
         <Text fontSize="xl">
           To get started, please enter your name and your email address below.
         </Text>

@@ -2,11 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import useSWR from "swr";
-import {
-  getDogData,
-  searchDogs,
-  findAMatch,
-} from "../requests/dogs";
+import { getDogData, searchDogs, findAMatch } from "../requests/dogs";
 import { QueryParams } from "../types/query-params";
 import type { Dog } from "../types/dog";
 import { DogProfile } from "./dog";
@@ -101,7 +97,7 @@ export default function Dashboard() {
       <div>
         {searchError?.status === 401 || dogError?.status === 401 ? (
           <Box p="8">
-            <Heading>It looks like you're not logged in.</Heading>
+            <Heading>It looks like you&lsquo;re not logged in.</Heading>
             <Link as={NextLink} href="/">
               Login again
             </Link>

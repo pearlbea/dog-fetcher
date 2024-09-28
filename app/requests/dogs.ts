@@ -1,7 +1,7 @@
 import { BASE_URL } from "./constants";
 import { QueryParams } from "../types/query-params";
 
-export async function searchDogs(url: string, searchParams: QueryParams) {
+export async function searchDogs(_url: string, searchParams: QueryParams) {
   const search = new URLSearchParams();
 
   for (const [key, value] of Object.entries(searchParams)) {
@@ -25,7 +25,6 @@ export async function searchDogs(url: string, searchParams: QueryParams) {
 }
 
 export async function getDogData({
-  url,
   dogIds,
 }: {
   url?: string;
