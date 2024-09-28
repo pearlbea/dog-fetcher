@@ -1,39 +1,57 @@
-import React, { MouseEventHandler } from 'react';
-import Image from 'next/image';
-import { LikeIcon } from './like-icon';
-import type { Dog } from '../types/dog';
+import React from "react";
 
+import {
+  Card,
+  CardBody,
+  Image,
+  IconButton,
+  Box,
+  Flex,
+  Heading,
+  UnorderedList,
+  ListItem,
+} from "@chakra-ui/react";
+import { LikeIcon } from "./like-icon";
+import type { Dog } from "../types/dog";
 
-export default function DogProfile({ dog }: { dog: Dog }) {
+export function DogProfile({ dog }: { dog: Dog }) {
+  const [liked, setLiked] = React.useState(false);
 
-    const [ liked, setLiked ] = React.useState(false);
-   
-    function handleLike() {
-        setLiked(!liked);
-        if (liked) {
-            // TODO: store liked ids for match
-        }
+  function handleLike() {
+    setLiked(!liked);
+    if (liked) {
+      // TODO: store liked ids for match
     }
+  }
 
-    return (
-        <div className='border'>
-            <div className="relative h-48">
-                <Image src={dog.img} alt={dog.name} fill={true} className='object-cover' />
-            </div>
-            <div className="p-2 text-center">
-                <h2 className='text-lg font-semibold'>{dog.name}</h2>
-                <div className='flex justify-between px-2'>
-                    <ul className='text-left'>
-                        <li>{dog.breed}</li>
-                        <li>age: {dog.age}</li>
-                        <li>zip code: {dog.zip_code}</li>
-                    </ul>
-                        <button onClick={handleLike}>
-                            <LikeIcon liked={liked} />
-                            <span className="sr-only">{liked ? "unlike" : "like"}</span>
-                        </button>
-                </div>
-            </div>
-        </div>  
-    );
+  return (
+    <Card h="100%">
+      <Image
+        alt={dog.name}
+        borderTopRadius="lg"
+        objectFit="cover"
+        h="60%"
+        src={dog.img}
+      />
+      <CardBody>
+        <Box>
+          <Heading size="md" textAlign="center">
+            {dog.name}
+          </Heading>
+          <Flex justify="space-between" align="center">
+            <UnorderedList styleType="none" m="0">
+              <ListItem>{dog.breed}</ListItem>
+              <ListItem>age: {dog.age}</ListItem>
+              <ListItem>zip code: {dog.zip_code}</ListItem>
+            </UnorderedList>
+            <IconButton
+              aria-label="like"
+              icon={<LikeIcon liked={liked} />}
+              onClick={handleLike}
+            />
+          </Flex>
+        </Box>
+      </CardBody>
+    </Card>
+  );
 }
