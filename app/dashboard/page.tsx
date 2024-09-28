@@ -175,11 +175,7 @@ export default function Dashboard() {
       </Center>
 
       {match ? (
-        <MatchModal
-          dog={match}
-          handleLike={handleLike}
-          onModalClose={() => setMatch(null)}
-        />
+        <MatchModal dog={match} onModalClose={() => setMatch(null)} />
       ) : null}
     </>
   );

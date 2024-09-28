@@ -19,13 +19,13 @@ export function DogProfile({
   handleLike,
 }: {
   dog: Dog;
-  handleLike: ({ dogId, liked }: { dogId: string; liked: boolean }) => void;
+  handleLike?: ({ dogId, liked }: { dogId: string; liked: boolean }) => void;
 }) {
   const [liked, setLiked] = useState(false);
 
   function handleDogLike() {
     setLiked(!liked);
-    handleLike({ dogId: dog.id, liked: !liked });
+    if (handleLike) handleLike({ dogId: dog.id, liked: !liked });
   }
 
   return (

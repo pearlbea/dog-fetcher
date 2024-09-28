@@ -11,11 +11,9 @@ import { Dog } from "../types/dog";
 
 export function MatchModal({
   dog,
-  handleLike,
   onModalClose,
 }: {
   dog: Dog;
-  handleLike: () => void;
   onModalClose: () => void;
 }) {
   const [open, setOpen] = useState(true);
@@ -30,7 +28,7 @@ export function MatchModal({
       <ModalContent>
         <ModalHeader>You have a match!</ModalHeader>
         <ModalCloseButton />
-        <DogProfile dog={dog} handleLike={handleLike} />
+        <DogProfile dog={dog} />
       </ModalContent>
     </Modal>
   );
