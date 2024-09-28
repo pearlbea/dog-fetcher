@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 
 import {
   Card,
@@ -14,14 +14,18 @@ import {
 import { LikeIcon } from "./like-icon";
 import type { Dog } from "../types/dog";
 
-export function DogProfile({ dog }: { dog: Dog }) {
-  const [liked, setLiked] = React.useState(false);
+export function DogProfile({
+  dog,
+  handleLike,
+}: {
+  dog: Dog;
+  handleLike: ({ dogId, liked }: { dogId: string; liked: boolean }) => void;
+}) {
+  const [liked, setLiked] = useState(false);
 
-  function handleLike() {
+  function handleDogLike() {
     setLiked(!liked);
-    if (liked) {
-      // TODO: store liked ids for match
-    }
+    handleLike({ dogId: dog.id, liked: !liked });
   }
 
   return (
@@ -47,7 +51,9 @@ export function DogProfile({ dog }: { dog: Dog }) {
             <IconButton
               aria-label="like"
               icon={<LikeIcon liked={liked} />}
-              onClick={handleLike}
+              onClick={handleDogLike}
+              variant="ghost"
+              colorScheme="pink"
             />
           </Flex>
         </Box>

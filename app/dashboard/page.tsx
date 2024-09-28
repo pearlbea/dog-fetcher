@@ -7,23 +7,25 @@ import { DogProfile } from "./dog";
 import { BreedList } from "./breed-list";
 import type { Dog } from "../types/dog";
 import {
+  Box,
   Button,
   Center,
   Container,
+  Flex,
   Heading,
+  Select,
   SimpleGrid,
-  Box,
   Spinner,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 
 export default function Dashboard() {
-  // TODO: Handle likes
-  const [likedDogs, setLikedDogs] = useState([]);
+  const [likedDogs, setLikedDogs] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useState<QueryParams>({
     sort: "breed:asc",
   });
+  const [sortBy, setSortBy] = useState("breed (asc)");
 
   const {
     data: searchResults,
@@ -43,6 +45,25 @@ export default function Dashboard() {
   function handleBreedChange(event: ChangeEvent<HTMLSelectElement>) {
     const selectedBreed = event.currentTarget.value;
     setSearchParams({ ...searchParams, breeds: [selectedBreed], from: "0" });
+  }
+
+  function handleLike({ dogId, liked }: { dogId: string; liked: boolean }) {
+    if (liked) {
+      setLikedDogs(() => [...likedDogs, dogId]);
+    } else {
+      const updatedLikes = likedDogs.filter((item) => item !== dogId);
+      setLikedDogs(updatedLikes);
+    }
+  }
+
+  function handleSort(event: ChangeEvent<HTMLSelectElement>) {
+    const sortOrder = event.currentTarget.value;
+    setSortBy(sortOrder);
+    setSearchParams({ ...searchParams, sort: sortOrder, from: "0" });
+  }
+
+  function handleMatch() {
+    // TODO: add matching
   }
 
   function handleNext() {
@@ -74,7 +95,12 @@ export default function Dashboard() {
             </Link>
           </Box>
         ) : (
-          "Error"
+          <Box p="8">
+            <Heading>Something went wrong. Sorry!</Heading>
+            <Link as={NextLink} href="/">
+              Return to Login page
+            </Link>
+          </Box>
         )}
       </div>
     );
@@ -99,11 +125,27 @@ export default function Dashboard() {
 
   return (
     <div>
-      <BreedList onChangeHandler={handleBreedChange} />
+      <Flex>
+        <BreedList onChangeHandler={handleBreedChange} />
+        <Select
+          placeholder={`Sort by: ${sortBy}`}
+          onChange={handleSort}
+          mx="2"
+          w="300px"
+        >
+          <option value="breed:asc">breed (asc)</option>
+          <option value="breed:desc">breed (desc)</option>
+          <option value="age:asc">age (asc)</option>
+          <option value="age:desc">age (desc)</option>
+        </Select>
+        <Button mx="2" onClick={handleMatch}>
+          Find a match!
+        </Button>
+      </Flex>
       <SimpleGrid my="4" columns={{ sm: 2, md: 3, lg: 4, xl: 5 }} spacing={4}>
         {dogs?.map((dog: Dog) => (
           <Box h="100%" key={dog.id}>
-            <DogProfile dog={dog} />
+            <DogProfile dog={dog} handleLike={handleLike} />
           </Box>
         ))}
       </SimpleGrid>
