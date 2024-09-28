@@ -10,6 +10,11 @@
     "test": "jest"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "framer-motion": "^11.8.0",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",

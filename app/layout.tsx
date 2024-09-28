@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { Providers } from "./providers/providers";
+import { Box, Container, Heading } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Dog fetcher",
@@ -24,15 +13,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="bg-gradient-to-r from-pink-900 to-purple-900 py-4 px-8">
-          <h1 className="text-2xl mx-auto max-w-6xl text-amber-300 font-bold">Dog Fetcher</h1>
-        </header>
-        <main className="container mx-auto max-w-6xl px-8">
-          {children}
-        </main>
+      <body>
+        <Providers>
+          <Box
+            as="header"
+            bgGradient="linear(to-r, pink.700, purple.900)"
+            mb="4"
+            px="8"
+            py="4"
+            w="100%"
+          >
+            <Heading color="yellow.300">Dog Fetcher</Heading>
+          </Box>
+          <Container maxWidth="1280px">{children}</Container>
+        </Providers>
       </body>
     </html>
   );
