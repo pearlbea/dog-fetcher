@@ -2,10 +2,16 @@
 
 import { useState, ChangeEvent } from "react";
 import useSWR from "swr";
-import { getDogData, searchDogs, type QueryParams } from "../requests/dogs";
+import {
+  getDogData,
+  searchDogs,
+  findAMatch,
+  type QueryParams,
+} from "../requests/dogs";
 import { DogProfile } from "./dog";
 import { BreedList } from "./breed-list";
 import type { Dog } from "../types/dog";
+import { MatchModal } from "./match-modal";
 import {
   Box,
   Button,
@@ -26,6 +32,7 @@ export default function Dashboard() {
     sort: "breed:asc",
   });
   const [sortBy, setSortBy] = useState("breed (asc)");
+  const [match, setMatch] = useState(null);
 
   const {
     data: searchResults,
@@ -34,13 +41,14 @@ export default function Dashboard() {
   } = useSWR(["/dogs/search", searchParams], ([url, searchParams]) =>
     searchDogs(url, searchParams)
   );
+
   const dogIds = searchResults?.resultIds;
 
   const {
     data: dogs,
     error: dogError,
     isLoading: isLodingDogs,
-  } = useSWR(["/dogs", dogIds], ([url, dogIds]) => getDogData(url, dogIds));
+  } = useSWR(["/dogs", dogIds], ([url, dogIds]) => getDogData({ url, dogIds }));
 
   function handleBreedChange(event: ChangeEvent<HTMLSelectElement>) {
     const selectedBreed = event.currentTarget.value;
@@ -62,8 +70,12 @@ export default function Dashboard() {
     setSearchParams({ ...searchParams, sort: sortOrder, from: "0" });
   }
 
-  function handleMatch() {
-    // TODO: add matching
+  async function handleMatch() {
+    // TODO: handle case of no likes
+    // TODO: handle case of too many likes
+    const matchId = await findAMatch(likedDogs);
+    const response = await getDogData({ dogIds: [matchId.match] });
+    setMatch(response[0]);
   }
 
   function handleNext() {
@@ -124,7 +136,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <>
       <Flex>
         <BreedList onChangeHandler={handleBreedChange} />
         <Select
@@ -165,6 +177,8 @@ export default function Dashboard() {
           ""
         )}
       </Center>
-    </div>
+
+      {match ? <MatchModal dog={match} handleLike={handleLike} onModalClose={() => setMatch(null)} /> : null}
+    </>
   );
 }
