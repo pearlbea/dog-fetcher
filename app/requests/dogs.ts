@@ -1,14 +1,5 @@
 import { BASE_URL } from "./constants";
-
-export interface QueryParams {
-  ageMax?: number;
-  ageMin?: number;
-  breeds?: string[];
-  from?: string;
-  prev?: string;
-  sort?: string;
-  zipCodes?: string[];
-}
+import { QueryParams } from "../types/query-params";
 
 export async function searchDogs(url: string, searchParams: QueryParams) {
   const search = new URLSearchParams();
@@ -33,7 +24,13 @@ export async function searchDogs(url: string, searchParams: QueryParams) {
   }
 }
 
-export async function getDogData({url, dogIds} : {url?: string, dogIds: string[]}) {
+export async function getDogData({
+  url,
+  dogIds,
+}: {
+  url?: string;
+  dogIds: string[];
+}) {
   const endpoint = `${BASE_URL}/dogs`;
 
   try {

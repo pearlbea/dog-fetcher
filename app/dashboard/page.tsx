@@ -6,11 +6,11 @@ import {
   getDogData,
   searchDogs,
   findAMatch,
-  type QueryParams,
 } from "../requests/dogs";
+import { QueryParams } from "../types/query-params";
+import type { Dog } from "../types/dog";
 import { DogProfile } from "./dog";
 import { BreedList } from "./breed-list";
-import type { Dog } from "../types/dog";
 import { MatchModal } from "./match-modal";
 import {
   Box,
@@ -143,7 +143,7 @@ export default function Dashboard() {
           placeholder={`Sort by: ${sortBy}`}
           onChange={handleSort}
           mx="2"
-          w="300px"
+          maxW="300px"
         >
           <option value="breed:asc">breed (asc)</option>
           <option value="breed:desc">breed (desc)</option>
@@ -178,7 +178,13 @@ export default function Dashboard() {
         )}
       </Center>
 
-      {match ? <MatchModal dog={match} handleLike={handleLike} onModalClose={() => setMatch(null)} /> : null}
+      {match ? (
+        <MatchModal
+          dog={match}
+          handleLike={handleLike}
+          onModalClose={() => setMatch(null)}
+        />
+      ) : null}
     </>
   );
 }

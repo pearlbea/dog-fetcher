@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, ChangeEventHandler } from "react";
+import { ChangeEvent } from "react";
 import useSWR from "swr";
 import { breeds } from "../requests/breeds";
 import { Select, Spinner } from "@chakra-ui/react";
@@ -13,15 +13,23 @@ export function BreedList({
   const { data, error, isLoading } = useSWR("BREEDS", breeds);
 
   if (error) {
-    return <div>Error</div>;
+    return <div>Error!</div>;
   }
 
   if (isLoading) {
-    return <div>is Loading</div>;
+    return (
+      <div>
+        <Spinner />
+      </div>
+    );
   }
 
   return (
-    <Select placeholder="Filter by breed" w="300px" onChange={onChangeHandler}>
+    <Select
+      placeholder="Filter by breed"
+      maxW="300px"
+      onChange={onChangeHandler}
+    >
       {data.map((breed: string) => (
         <option key={breed} value={breed}>
           {breed}

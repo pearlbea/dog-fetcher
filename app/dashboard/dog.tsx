@@ -46,7 +46,7 @@ export function DogProfile({
             <UnorderedList styleType="none" m="0">
               <ListItem>{dog.breed}</ListItem>
               <ListItem>age: {dog.age}</ListItem>
-              <ListItem>zip code: {dog.zip_code}</ListItem>
+              <ListItem>zipcode: {dog.zip_code}</ListItem>
             </UnorderedList>
             <IconButton
               aria-label="like"
