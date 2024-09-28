@@ -27,7 +27,7 @@ export default function Login() {
     e.preventDefault();
     setStatus("loading");
 
-    const response = await login({ name, email });
+    const response: any = await login({ name, email });
     //TODO: provide interface
     if (response.ok) {
       setStatus("success");
