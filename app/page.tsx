@@ -3,9 +3,11 @@
 import { FormEvent, useState } from "react";
 import { login } from "./requests/login";
 import { useRouter } from "next/navigation";
+
 import {
   Box,
   Button,
+  Center,
   Container,
   FormControl,
   FormLabel,
@@ -27,8 +29,8 @@ export default function Login() {
     e.preventDefault();
     setStatus("loading");
 
-    const response: any = await login({ name, email });
-    //TODO: provide interface
+    const response = await login({ name, email });
+
     if (response.ok) {
       setStatus("success");
       router.push("/dashboard");
@@ -38,14 +40,18 @@ export default function Login() {
   }
 
   if (status === "error") {
-    return <Box p="8">Something went wrong. Please try again.</Box>;
+    return (
+      <Box p="8">
+        <Heading>Something went wrong. Please try again.</Heading>
+      </Box>
+    );
   }
 
   if (status === "loading") {
     return (
-      <Box p="8">
+      <Center p="8">
         <Spinner />
-      </Box>
+      </Center>
     );
   }
 
