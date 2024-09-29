@@ -58,7 +58,7 @@ export default function Login() {
   return (
     <Container>
       <Box p="8">
-        <Heading as="h1">Let&lsquo;s find you a dog!</Heading>
+        <Heading as="h1">Let&rsquo;s find you a dog!</Heading>
         <Text fontSize="xl">
           To get started, please enter your name and your email address below.
         </Text>

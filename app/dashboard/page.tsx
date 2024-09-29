@@ -102,7 +102,7 @@ export default function Dashboard() {
       <div>
         {searchError?.status === 401 || dogError?.status === 401 ? (
           <Box p="8">
-            <Heading>It looks like you&lsquo;re not logged in.</Heading>
+            <Heading>It looks like you&rsquo;re not logged in.</Heading>
             <Link as={NextLink} href="/">
               Login again
             </Link>
