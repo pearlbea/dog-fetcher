@@ -33,9 +33,9 @@ export function DogProfile({
       <Image
         alt={dog.name}
         borderTopRadius="lg"
-        h="60%"
+        height="240"
         loading="lazy"
-        objectFit="cover"
+        objectFit="contain"
         src={dog.img}
       />
       <CardBody>

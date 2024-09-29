@@ -16,11 +16,11 @@ import {
   Container,
   Flex,
   Heading,
-  Select,
   SimpleGrid,
   Spinner,
   Text,
 } from "@chakra-ui/react";
+import { WarningIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 
@@ -140,13 +140,14 @@ export default function Dashboard() {
     <>
       <Flex alignItems="flex-end">
         <BreedList onChangeHandler={handleBreedChange} />
-        <SortResults handleSort={handleSort} />
+        <SortResults handleSort={handleSort} sortBy={sortBy} />
         <Button mx="2" onClick={handleMatch} minW="120px">
           <Text fontSize={{ sm: "sm", md: "md" }}>Find a match!</Text>
         </Button>
       </Flex>
       {matchError ? (
         <Text p="2" align="right">
+          <WarningIcon w={8} h={8} color="red.500" pr="2" />
           Please favorite at least one (but no more than 100) dogs to get a
           match.
         </Text>
