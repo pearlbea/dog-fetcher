@@ -1,14 +1,15 @@
 "use client";
 
-import { ChangeEvent } from "react";
 import useSWR from "swr";
 import { breeds } from "../requests/breeds";
 import { FormControl, FormLabel, Select, Spinner } from "@chakra-ui/react";
 
 export function BreedList({
+  currentBreed,
   onChangeHandler,
 }: {
-  onChangeHandler: (event: ChangeEvent<HTMLSelectElement>) => void;
+  currentBreed: string;
+  onChangeHandler: (selectedBreed: string) => void;
 }) {
   const { data, error, isLoading } = useSWR("BREEDS", breeds);
 
@@ -31,7 +32,8 @@ export function BreedList({
       </FormLabel>
       <Select
         fontSize={{ base: "small", sm: "medium" }}
-        onChange={onChangeHandler}
+        onChange={(e) => onChangeHandler(e.currentTarget.value)}
+        value={currentBreed}
       >
         {data.map((breed: string) => (
           <option key={breed} value={breed}>

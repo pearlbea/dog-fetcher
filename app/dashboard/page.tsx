@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import { getDogData, searchDogs, findAMatch } from "../requests/dogs";
 import { QueryParams } from "../types/query-params";
@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [searchParams, setSearchParams] = useState<QueryParams>({
     sort: "breed:asc",
   });
+  const [currentBreed, setCurrentBreed] = useState("");
   const [sortBy, setSortBy] = useState("breed (asc)");
   const [match, setMatch] = useState(null);
   const [matchError, setMatchError] = useState(false);
@@ -49,8 +50,8 @@ export default function Dashboard() {
     isLoading: isLodingDogs,
   } = useSWR(["/dogs", dogIds], ([url, dogIds]) => getDogData({ url, dogIds }));
 
-  function handleBreedChange(event: ChangeEvent<HTMLSelectElement>) {
-    const selectedBreed = event.currentTarget.value;
+  function handleBreedChange(selectedBreed: string) {
+    setCurrentBreed(selectedBreed);
     setSearchParams({ ...searchParams, breeds: [selectedBreed], from: "0" });
   }
 
@@ -130,7 +131,10 @@ export default function Dashboard() {
   if (dogs && !dogs.length) {
     return (
       <div>
-        <BreedList onChangeHandler={handleBreedChange} />
+        <BreedList
+          onChangeHandler={handleBreedChange}
+          currentBreed={currentBreed}
+        />
         <Box my="4">No results. Try a different search.</Box>
       </div>
     );
@@ -139,7 +143,10 @@ export default function Dashboard() {
   return (
     <>
       <Flex alignItems="flex-end">
-        <BreedList onChangeHandler={handleBreedChange} />
+        <BreedList
+          onChangeHandler={handleBreedChange}
+          currentBreed={currentBreed}
+        />
         <SortResults handleSort={handleSort} sortBy={sortBy} />
         <Button mx="2" onClick={handleMatch} minW="120px">
           <Text fontSize={{ sm: "sm", md: "md" }}>Find a match!</Text>
