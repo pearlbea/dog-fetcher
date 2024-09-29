@@ -26,6 +26,7 @@ export function BreedList({
 
   return (
     <Select
+      fontSize={{ sm: "small", md: "medium" }}
       placeholder="Filter by breed"
       maxW="300px"
       onChange={onChangeHandler}

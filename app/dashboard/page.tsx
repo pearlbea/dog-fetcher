@@ -18,6 +18,7 @@ import {
   Select,
   SimpleGrid,
   Spinner,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
@@ -136,6 +137,7 @@ export default function Dashboard() {
       <Flex>
         <BreedList onChangeHandler={handleBreedChange} />
         <Select
+          fontSize={{ sm: "small", md: "medium" }}
           placeholder={`Sort by: ${sortBy}`}
           onChange={handleSort}
           mx="2"
@@ -146,8 +148,8 @@ export default function Dashboard() {
           <option value="age:asc">age (asc)</option>
           <option value="age:desc">age (desc)</option>
         </Select>
-        <Button mx="2" onClick={handleMatch}>
-          Find a match!
+        <Button mx="2" onClick={handleMatch} minW="120px">
+          <Text fontSize={{ sm: "sm", md: "md" }}>Find a match!</Text>
         </Button>
       </Flex>
       <SimpleGrid my="4" columns={{ sm: 2, md: 3, lg: 4, xl: 5 }} spacing={4}>
