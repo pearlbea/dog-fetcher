@@ -3,7 +3,7 @@
 import { ChangeEvent } from "react";
 import useSWR from "swr";
 import { breeds } from "../requests/breeds";
-import { Select, Spinner } from "@chakra-ui/react";
+import { FormControl, FormLabel, Select, Spinner } from "@chakra-ui/react";
 
 export function BreedList({
   onChangeHandler,
@@ -25,17 +25,20 @@ export function BreedList({
   }
 
   return (
-    <Select
-      fontSize={{ sm: "small", md: "medium" }}
-      placeholder="Filter by breed"
-      maxW="300px"
-      onChange={onChangeHandler}
-    >
-      {data.map((breed: string) => (
-        <option key={breed} value={breed}>
-          {breed}
-        </option>
-      ))}
-    </Select>
+    <FormControl maxW="300px">
+      <FormLabel fontSize={{ base: "small", sm: "medium" }}>
+        Filter by breed
+      </FormLabel>
+      <Select
+        fontSize={{ base: "small", sm: "medium" }}
+        onChange={onChangeHandler}
+      >
+        {data.map((breed: string) => (
+          <option key={breed} value={breed}>
+            {breed}
+          </option>
+        ))}
+      </Select>
+    </FormControl>
   );
 }

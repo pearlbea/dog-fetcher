@@ -7,6 +7,7 @@ import { QueryParams } from "../types/query-params";
 import type { Dog } from "../types/dog";
 import { DogProfile } from "./dog";
 import { BreedList } from "./breed-list";
+import { SortResults } from "./sort-results";
 import { MatchModal } from "./match-modal";
 import {
   Box,
@@ -63,10 +64,9 @@ export default function Dashboard() {
     }
   }
 
-  function handleSort(event: ChangeEvent<HTMLSelectElement>) {
-    const sortOrder = event.currentTarget.value;
-    setSortBy(sortOrder);
-    setSearchParams({ ...searchParams, sort: sortOrder, from: "0" });
+  function handleSort(newSortOrder: string) {
+    setSortBy(newSortOrder);
+    setSearchParams({ ...searchParams, sort: newSortOrder, from: "0" });
   }
 
   async function handleMatch() {
@@ -138,20 +138,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <Flex>
+      <Flex alignItems="flex-end">
         <BreedList onChangeHandler={handleBreedChange} />
-        <Select
-          fontSize={{ sm: "small", md: "medium" }}
-          placeholder={`Sort by: ${sortBy}`}
-          onChange={handleSort}
-          mx="2"
-          maxW="300px"
-        >
-          <option value="breed:asc">breed (asc)</option>
-          <option value="breed:desc">breed (desc)</option>
-          <option value="age:asc">age (asc)</option>
-          <option value="age:desc">age (desc)</option>
-        </Select>
+        <SortResults handleSort={handleSort} />
         <Button mx="2" onClick={handleMatch} minW="120px">
           <Text fontSize={{ sm: "sm", md: "md" }}>Find a match!</Text>
         </Button>

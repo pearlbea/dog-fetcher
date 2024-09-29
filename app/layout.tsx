@@ -4,6 +4,7 @@ import { Box, Container, Heading } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "Dog fetcher",
+  description: "An exercise",
 };
 
 export default function RootLayout({
