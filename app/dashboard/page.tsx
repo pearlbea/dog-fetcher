@@ -30,6 +30,7 @@ export default function Dashboard() {
   });
   const [sortBy, setSortBy] = useState("breed (asc)");
   const [match, setMatch] = useState(null);
+  const [matchError, setMatchError] = useState(false);
 
   const {
     data: searchResults,
@@ -54,6 +55,7 @@ export default function Dashboard() {
 
   function handleLike({ dogId, liked }: { dogId: string; liked: boolean }) {
     if (liked) {
+      setMatchError(false);
       setLikedDogs(() => [...likedDogs, dogId]);
     } else {
       const updatedLikes = likedDogs.filter((item) => item !== dogId);
@@ -68,8 +70,10 @@ export default function Dashboard() {
   }
 
   async function handleMatch() {
-    // TODO: handle case of no likes
-    // TODO: handle case of too many likes
+    setMatchError(false);
+    if (!likedDogs.length || likedDogs.length > 100) {
+      return setMatchError(true);
+    }
     const matchId = await findAMatch(likedDogs);
     const response = await getDogData({ dogIds: [matchId.match] });
     setMatch(response[0]);
@@ -152,6 +156,12 @@ export default function Dashboard() {
           <Text fontSize={{ sm: "sm", md: "md" }}>Find a match!</Text>
         </Button>
       </Flex>
+      {matchError ? (
+        <Text p="2" align="right">
+          Please favorite at least one (but no more than 100) dogs to get a
+          match.
+        </Text>
+      ) : null}
       <SimpleGrid my="4" columns={{ sm: 2, md: 3, lg: 4, xl: 5 }} spacing={4}>
         {dogs?.map((dog: Dog) => (
           <Box h="100%" key={dog.id}>
