@@ -1,10 +1,10 @@
 import { useState } from "react";
 import {
   Modal,
-  ModalOverlay,
+  ModalCloseButton,
   ModalContent,
   ModalHeader,
-  ModalCloseButton,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { DogProfile } from "./dog";
 import { Dog } from "../types/dog";
